@@ -1,5 +1,6 @@
 package controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import service.CategoryService;
 @RequestMapping("/category")
 public class CategoryController {
 	
+	@Autowired
 	CategoryService categoruservice;
 	
 	public ResponseEntity<Page<GenericProductDTO>> getProductsByCategoryId(@PathVariable("id") long categoryId,
