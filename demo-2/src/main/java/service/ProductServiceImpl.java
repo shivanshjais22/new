@@ -8,6 +8,8 @@ import Model.Price;
 import Model.Product;
 import repository.ProductRepository;
 import lombok.AllArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -21,30 +23,38 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Service
 public class ProductServiceImpl implements ProductService {
+	
+	@Autowired
     ProductRepository productRepository;
 
     public Product from(GenericProductDTO genericProductDTO) {
-        Product product = new Product();
-        Category category = new Category();
-        Price price = new Price();
-        category.setName(genericProductDTO.getCategory());
-        price.setValue(genericProductDTO.getPrice());
-        product.setTitle(genericProductDTO.getTitle());
-        product.setDescription(genericProductDTO.getDescription());
-        product.setImage(genericProductDTO.getImage());
-        product.setPrice(price);
-        product.setCategory(category);
-        return product;
-    }
+    	  Product product = new Product();
+
+    	    // Add this line to set ID if updating
+    	
+    	    Category category = new Category();
+    	    category.setName(genericProductDTO.getCategory());
+
+    	    Price price = new Price();
+    	    price.setValue(genericProductDTO.getPrice());
+
+    	    product.setTitle(genericProductDTO.getTitle());
+    	    product.setDescription(genericProductDTO.getDescription());
+    	    product.setImage(genericProductDTO.getImage());
+    	    product.setCategory(category);
+    	    product.setPrice(price);
+
+    	    return product;
+    	    }
 
     public GenericProductDTO from(Product product) {
-        GenericProductDTO genericProductDTO = new GenericProductDTO();
-        genericProductDTO.setTitle(product.getTitle());
-        genericProductDTO.setDescription(product.getDescription());
-        genericProductDTO.setCategory(product.getCategory().getName());
-        genericProductDTO.setPrice(product.getPrice().getValue());
-        genericProductDTO.setImage(product.getImage());
-        return genericProductDTO;
+    	 GenericProductDTO dto = new GenericProductDTO();
+    	   dto.setTitle(product.getTitle());
+    	    dto.setDescription(product.getDescription());
+    	    dto.setCategory(product.getCategory().getName());
+    	    dto.setPrice(product.getPrice().getValue());
+    	    dto.setImage(product.getImage());
+    	    return dto;
     }
 
 	@Override
